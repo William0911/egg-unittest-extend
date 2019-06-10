@@ -1,9 +1,9 @@
 {
-  "name": "keepwork-unittest-extend",
+  "name": "egg-unittest-extend",
   "version": "1.0.0",
   "description": "factory-girl and axios-mock-adapter plugin for egg unittest",
   "eggPlugin": {
-    "name": "keepworkUnittestExtend"
+    "name": "eggUnittestExtend"
   },
   "keywords": [
     "egg",
@@ -47,12 +47,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/eggjs/egg-test-extend.git"
+    "url": "git+https://github.com/william0911/egg-unittest-extend.git"
   },
   "bugs": {
-    "url": "https://github.com/eggjs/egg/issues"
+    "url": "https://github.com/william0911/egg-unittest-extend/issues"
   },
-  "homepage": "https://github.com/eggjs/egg-test-extend#readme",
+  "homepage": "https://github.com/william0911/egg-unittest-extend#readme",
   "author": "William Zheng",
   "license": "MIT"
 }

@@ -4,11 +4,11 @@ const mock = require('egg-mock');
 const assert = require('power-assert');
 const axios = require('axios');
 
-describe('test/keepwork-test-extend.test.js', () => {
+describe('test/egg-unittest-extend.test.js', () => {
   let app;
   before(() => {
     app = mock.app({
-      baseDir: 'apps/keepwork-unittest-extend-test',
+      baseDir: 'apps/egg-unittest-extend-test',
     });
     return app.ready();
   });
@@ -19,7 +19,7 @@ describe('test/keepwork-test-extend.test.js', () => {
   it('should GET /', () => {
     return app.httpRequest()
       .get('/')
-      .expect('hi, keepworkUnittestExtend')
+      .expect('hi, eggUnittestExtend')
       .expect(200);
   });
 

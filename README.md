@@ -1,62 +1,87 @@
-# egg-test-extend
-
-[![NPM version][npm-image]][npm-url]
-[![build status][travis-image]][travis-url]
-[![Test coverage][codecov-image]][codecov-url]
-[![David deps][david-image]][david-url]
-[![Known Vulnerabilities][snyk-image]][snyk-url]
-[![npm download][download-image]][download-url]
-
-[npm-image]: https://img.shields.io/npm/v/egg-test-extend.svg?style=flat-square
-[npm-url]: https://npmjs.org/package/egg-test-extend
-[travis-image]: https://img.shields.io/travis/eggjs/egg-test-extend.svg?style=flat-square
-[travis-url]: https://travis-ci.org/eggjs/egg-test-extend
-[codecov-image]: https://img.shields.io/codecov/c/github/eggjs/egg-test-extend.svg?style=flat-square
-[codecov-url]: https://codecov.io/github/eggjs/egg-test-extend?branch=master
-[david-image]: https://img.shields.io/david/eggjs/egg-test-extend.svg?style=flat-square
-[david-url]: https://david-dm.org/eggjs/egg-test-extend
-[snyk-image]: https://snyk.io/test/npm/egg-test-extend/badge.svg?style=flat-square
-[snyk-url]: https://snyk.io/test/npm/egg-test-extend
-[download-image]: https://img.shields.io/npm/dm/egg-test-extend.svg?style=flat-square
-[download-url]: https://npmjs.org/package/egg-test-extend
+# egg-unittest-extend
 
 <!--
 Description here.
 -->
 
+unittest extension for egg.js, based on [ctimmerm/axios-mock-adapter](https://github.com/ctimmerm/axios-mock-adapter) and [aexmachina/factory-girl](https://github.com/aexmachina/factory-girl/blob/master/src/adapters/DefaultAdapter.js)
+
 ## Install
 
 ```bash
-$ npm i egg-test-extend --save
+$ npm i egg-unittest-extend --save
 ```
 
 ## Usage
 
 ```js
 // {app_root}/config/plugin.js
-exports.testExtend = {
+exports.eggUnittestExtend = {
   enable: true,
-  package: 'egg-test-extend',
+  package: 'egg-unittest-extend',
 };
 ```
-
-## Configuration
-
-```js
-// {app_root}/config/config.default.js
-exports.testExtend = {
-};
-```
-
-see [config/config.default.js](config/config.default.js) for more detail.
 
 ## Example
 
 <!-- example here -->
 
+### factory-girl
+Read [aexmachina/factory-girl](https://github.com/aexmachina/factory-girl/blob/master/src/adapters/DefaultAdapter.js) for more details.
+```js
+// {app_root}/test/mock/factory/xxx.js
+'use strict';
+
+module.exports = app => {
+  const { factory } = app;
+  factory.define('User', app.model.User, {
+    username: factory.chance('name'),
+    age: factory.chance('age'),
+  });
+};
+
+// {app_root}/test/app/service/xxx.test.js
+'use strict';
+
+const { app } = require('egg-mock/bootstrap');
+
+let user
+before(async () => {
+  await app.ready();
+  user = app.factory.build('User');
+});
+
+```
+
+### mock-axios-adapter
+Read  [ctimmerm/axios-mock-adapter](https://github.com/ctimmerm/axios-mock-adapter) for more details.
+```js
+// {app_root}/test/mock/axios/xxx.js
+'use strict';
+
+module.exports = app => {
+  const { mockAxios } = app;
+  mockAxios.onGet('https://test.mock.axios/')
+    .reply(200, 'load mockAxios successfully');
+};
+
+// {app_root}/test/app/service/xxx.test.js
+'use strict';
+
+const { app, assert } = require('egg-mock/bootstrap');
+const axios = require('axios');
+
+describe('test/app/service/xxx.test.js', () => {
+  it('should get mock response by axios', async () => {
+    const res = await axios.get('https://test.mock.axios/');
+    assert(res.data === 'load mockAxios successfully');
+  });
+});
+```
+
 ## Questions & Suggestions
 
-Please open an issue [here](https://github.com/eggjs/egg/issues).
+Please open an issue [here](https://github.com/william0911/egg-unittest-extend/issues).
 
 ## License
 
