@@ -35,4 +35,10 @@ describe('test/keepwork-test-extend.test.js', () => {
     const res = await axios.get('https://test.mock.axios/');
     assert(res.data === 'load mockAxios successfully');
   });
+
+  it('should get mock model by factory', async () => {
+    const user = await app.factory.build('User');
+    assert(user.username);
+    assert(user.age);
+  });
 });
